@@ -1,0 +1,11 @@
+# PAVAN CODEX OS recommended defaults.
+# Keep model selection controlled by the Codex UI/account so this file stays portable.
+
+model_reasoning_effort = "high"
+
+[features]
+multi_agent = true
+
+[agents]
+max_threads = 6
+max_depth = 2

@@ -1,17 +1,45 @@
-# PAVAN CODEX OS v2
+# PAVAN CODEX OS v3
 
-A modular personal engineering and design system for Codex: durable instructions, adaptive reasoning profiles, specialist subagents, reusable plugins/skills, Figma workflows, project overlays, starter templates, and evidence-based QA.
+A modular personal engineering and design system for Codex with automatic project routing, adaptive reasoning depth, specialist subagents, Figma workflows, reusable skills, and evidence-based QA.
 
-## What v2 optimizes
+## What v3 adds
 
-**Capability:** better architecture, UI art direction, Figma roundtrips, accessibility, responsive design, database design, performance, observability, AI-agent workflows, security, and production QA.
+### Automatic project classification
+Before substantial work, the core `adaptive-orchestrator` classifies the repository and task using cheap signals first. A deterministic helper (`scripts/classify_project.py`) recognizes common React/Next/Expo, Spring Boot, Python API, AI/agent, data/ML, Docker/Terraform, and mixed full-stack signals.
 
-**Efficiency:** low/medium reasoning by default, specialist-only deeper reasoning, capped subagent concurrency, concise outputs, progressive-disclosure skills, optional plugin packs, and no forced early compaction.
+### Adaptive thinking depth
+Tasks are routed into C0-C3 complexity levels:
+- C0: direct edit + narrow check
+- C1: short plan + focused validation
+- C2: evidence + alternatives + specialist + independent verification
+- C3: deep deliberation + failure/recovery analysis + adversarial verification
 
-## Packages
+Normal execution stays efficient, while Codex Plan mode gets a higher reasoning budget.
+
+### Stronger hard-task reasoning
+v3 adds:
+- `deep-deliberation` skill
+- `adversarial-verification` skill
+- `reasoning-critic` agent
+- `systems-thinker` agent
+- architect upgraded to high reasoning
+- explicit falsification/counterexample checks before important decisions
+
+This does not change the model's underlying intelligence; it improves effective problem-solving by allocating more reasoning and independent verification to the tasks that benefit from it.
+
+## Reasoning profiles
+
+- `pavan-economy` — routine fixes and high-volume work.
+- `pavan-balanced` — recommended default: medium execution reasoning + high Plan-mode reasoning.
+- `pavan-deep` — high execution reasoning + xhigh Plan mode where supported.
+- `pavan-maximum` — xhigh execution/Plan reasoning where the selected model supports it; intentionally expensive.
+
+`xhigh` availability is model-dependent. Keep balanced as the normal profile and use maximum only for genuinely hard tasks.
+
+## Plugin packs
 
 ### `pavan-codex-os`
-Core engineering workflows. Recommended for almost every project.
+Core orchestration, full-stack development, debugging, testing, security, hackathon, production QA, and adaptive reasoning workflows.
 
 ### `pavan-design-studio`
 Design Director, Figma Roundtrip, Responsive System, Accessibility Design, Motion Design, and Design Critique.
@@ -19,24 +47,16 @@ Design Director, Figma Roundtrip, Responsive System, Accessibility Design, Motio
 ### `pavan-backend-lab`
 Database Architect, Performance Optimizer, Observability Readiness, AI Agent Builder, Refactor Planner, and Dependency Auditor.
 
-The optional packages are separated so specialist capabilities do not have to crowd every task.
+Optional packs stay separate so unrelated specialist context does not crowd every task.
 
-## Adaptive profiles
-
-- `pavan-economy` — routine fixes, CRUD, CSS, small refactors, high-volume work.
-- `pavan-balanced` — normal development; recommended default.
-- `pavan-deep` — architecture, difficult debugging, security, or final audits.
-
-Profiles are stored under `.codex/profiles/` and copied next to your user config by the installer.
-
-## Windows install
+## Windows install / upgrade
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\scripts\install-windows.ps1
 ```
 
-This installs the core system only.
+If your existing `config.toml` was installed by PAVAN CODEX OS, v3 backs it up and upgrades it automatically. A custom non-PAVAN config is preserved.
 
 Add Design Studio:
 
@@ -56,42 +76,41 @@ Install all local plugin folders:
 .\scripts\install-windows.ps1 -InstallAllPlugins
 ```
 
-The installer backs up conflicting PAVAN files, preserves an existing `config.toml`, installs profiles, copies custom agents, and places selected local plugin packages under the Codex user directory. Depending on the current Codex build, local plugins may still need to be imported/enabled from the plugin UI.
-
 Restart Codex after installation.
 
 ## Figma
 
-Figma authentication is intentionally separate from this repository. See `docs/FIGMA-WORKFLOW.md`. Connect the Figma MCP integration in Codex Desktop, then the `figma-roundtrip` skill can use real design context when the tools are available.
+Connect the Figma MCP integration in Codex Desktop separately from this repository. See `docs/FIGMA-WORKFLOW.md`. When Figma/design context exists and UI fidelity matters, the automatic router should prefer the Figma/design workflow instead of inventing the design from scratch.
 
-## Maximize usable Codex time
+## Usage efficiency
 
-Read `docs/TOKEN-EFFICIENCY.md`. The short version:
-
-- use Standard mode when duration matters more than speed
-- use lighter/high-usage models for routine work when available
-- keep normal reasoning low/medium
-- use deep reasoning only for hard tasks
-- do not spawn agents for trivial work
-- narrow tests first, broad validation once
-- keep optional plugins/tools scoped to projects that need them
+See `docs/TOKEN-EFFICIENCY.md`. v3 deliberately separates **reasoning quality** from **reasoning everywhere**:
+- normal execution: low/medium where sufficient
+- Plan mode: higher reasoning
+- hard specialists: high reasoning
+- maximum/xhigh: only when the decision is difficult enough to justify the usage
+- no unnecessary subagents for tiny tasks
+- narrow falsifying tests before broad suites
+- optional plugins enabled only when relevant
 
 ## Repository map
 
 ```text
-AGENTS.md                         Adaptive global engineering rules
-.codex/config.toml               Balanced default config
-.codex/profiles/                 Economy / balanced / deep profiles
-.codex/agents/                   Specialist subagents
-plugins/pavan-codex-os/          Core plugin
-plugins/pavan-design-studio/     Design + Figma plugin
-plugins/pavan-backend-lab/       Deep backend plugin
+AGENTS.md                         Adaptive C0-C3 engineering rules
+.codex/config.toml               Balanced execution + deeper Plan mode
+.codex/profiles/                 Economy / balanced / deep / maximum
+.codex/agents/                   Specialist and reasoning agents
+plugins/pavan-codex-os/          Core + adaptive orchestration
+plugins/pavan-design-studio/     Design + Figma
+plugins/pavan-backend-lab/       Backend + AI + performance
+scripts/classify_project.py      Deterministic project classifier
 project-overlays/                Stack-specific rules
 templates/                       Starter blueprints
-docs/                            Operating and setup guides
+docs/ADAPTIVE-INTELLIGENCE.md    Reasoning architecture
+docs/PROJECT-ROUTING.md          Automatic routing map
 scripts/install-windows.ps1      Installer / updater
 scripts/doctor.ps1               Local environment check
-scripts/validate_repo.py         Deterministic repository validation
+scripts/validate_repo.py         Repository validation
 .github/workflows/validate.yml   CI validation
 ```
 
@@ -105,8 +124,9 @@ or:
 
 ```bash
 python scripts/validate_repo.py
+python scripts/classify_project.py . --json
 ```
 
 ## Operating principle
 
-More prompt text is not more intelligence. Give Codex the smallest relevant instruction set, the right tools, an appropriate reasoning budget, and a verification loop.
+Use the strongest reasoning that materially improves the decision, not the strongest reasoning available for every keystroke. Intelligence comes from the combination of model capability, relevant context, deliberate decomposition, tools, counterexamples, specialists, and verification.

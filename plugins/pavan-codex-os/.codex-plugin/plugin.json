@@ -1,6 +1,6 @@
 {
   "name": "pavan-codex-os",
-  "version": "2.0.0",
-  "description": "Core engineering workflows for full-stack development, debugging, testing, security, hackathons, and production verification.",
+  "version": "3.0.0",
+  "description": "Adaptive engineering workflows with automatic project routing, deeper deliberation for hard tasks, debugging, testing, security, and production verification.",
   "skills": "./skills/"
 }

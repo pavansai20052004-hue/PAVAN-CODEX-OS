@@ -1,0 +1,6 @@
+{
+  "name": "pavan-backend-lab",
+  "version": "1.0.0",
+  "description": "Deep backend workflows for data design, performance, observability, AI agents, refactoring, and dependency health.",
+  "skills": "./skills/"
+}

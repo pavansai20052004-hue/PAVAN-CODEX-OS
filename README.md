@@ -1,58 +1,99 @@
-# PAVAN CODEX OS
+# PAVAN CODEX OS v2
 
-PAVAN CODEX OS is a personal engineering layer for Codex: durable instructions, reusable skills, specialized subagents, design intelligence, project overlays, starter templates, validation, and a local plugin package.
+A modular personal engineering and design system for Codex: durable instructions, adaptive reasoning profiles, specialist subagents, reusable plugins/skills, Figma workflows, project overlays, starter templates, and evidence-based QA.
 
-## Goals
+## What v2 optimizes
 
-- Improve consistency without stuffing every prompt with repeated rules.
-- Separate permanent behavior (`AGENTS.md`) from task workflows (skills) and parallel specialists (subagents).
-- Make UI work design-first and visually verified.
-- Make debugging root-cause-first rather than patch-first.
-- Require evidence before claiming a task is complete.
-- Keep configuration modular so individual parts can evolve safely.
+**Capability:** better architecture, UI art direction, Figma roundtrips, accessibility, responsive design, database design, performance, observability, AI-agent workflows, security, and production QA.
 
-## Repository map
+**Efficiency:** low/medium reasoning by default, specialist-only deeper reasoning, capped subagent concurrency, concise outputs, progressive-disclosure skills, optional plugin packs, and no forced early compaction.
 
-```text
-AGENTS.md                         Global engineering defaults
-.codex/config.toml               Recommended Codex runtime defaults
-.codex/agents/*.toml             Custom subagents
-plugins/pavan-codex-os/          Local Codex plugin package
-  .codex-plugin/plugin.json      Plugin manifest
-  skills/*/SKILL.md              Reusable workflows
-  skills/*/references/           On-demand detail
-project-overlays/                Stack-specific AGENTS.md overlays
-templates/                       Project starter blueprints
-docs/                            Architecture and operating guidance
-scripts/install-windows.ps1      Windows installer / updater
-scripts/setup-project.ps1        Apply a stack overlay to a project
-scripts/validate.ps1             Local validation entrypoint
-scripts/validate_repo.py         Deterministic repository checks
-.github/workflows/validate.yml   CI validation
-```
+## Packages
 
-## Install on Windows
+### `pavan-codex-os`
+Core engineering workflows. Recommended for almost every project.
 
-Clone the repository, then from PowerShell run:
+### `pavan-design-studio`
+Design Director, Figma Roundtrip, Responsive System, Accessibility Design, Motion Design, and Design Critique.
+
+### `pavan-backend-lab`
+Database Architect, Performance Optimizer, Observability Readiness, AI Agent Builder, Refactor Planner, and Dependency Auditor.
+
+The optional packages are separated so specialist capabilities do not have to crowd every task.
+
+## Adaptive profiles
+
+- `pavan-economy` — routine fixes, CRUD, CSS, small refactors, high-volume work.
+- `pavan-balanced` — normal development; recommended default.
+- `pavan-deep` — architecture, difficult debugging, security, or final audits.
+
+Profiles are stored under `.codex/profiles/` and copied next to your user config by the installer.
+
+## Windows install
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\scripts\install-windows.ps1
 ```
 
-The installer backs up conflicting global instructions and agent files, preserves an existing `config.toml` instead of overwriting it, and copies the plugin package into your Codex user directory for local use.
+This installs the core system only.
 
-After installation, restart Codex so configuration can be rediscovered. If your Codex build manages plugins through its UI/marketplace, point it at or import the local plugin package rather than assuming manual discovery.
-
-## Apply project rules
-
-Example:
+Add Design Studio:
 
 ```powershell
-.\scripts\setup-project.ps1 -Type react -ProjectPath C:\code\my-app
+.\scripts\install-windows.ps1 -InstallDesignStudio
 ```
 
-Supported types: `react`, `python-fastapi`, `spring-boot`.
+Add Backend Lab:
+
+```powershell
+.\scripts\install-windows.ps1 -InstallBackendLab
+```
+
+Install all local plugin folders:
+
+```powershell
+.\scripts\install-windows.ps1 -InstallAllPlugins
+```
+
+The installer backs up conflicting PAVAN files, preserves an existing `config.toml`, installs profiles, copies custom agents, and places selected local plugin packages under the Codex user directory. Depending on the current Codex build, local plugins may still need to be imported/enabled from the plugin UI.
+
+Restart Codex after installation.
+
+## Figma
+
+Figma authentication is intentionally separate from this repository. See `docs/FIGMA-WORKFLOW.md`. Connect the Figma MCP integration in Codex Desktop, then the `figma-roundtrip` skill can use real design context when the tools are available.
+
+## Maximize usable Codex time
+
+Read `docs/TOKEN-EFFICIENCY.md`. The short version:
+
+- use Standard mode when duration matters more than speed
+- use lighter/high-usage models for routine work when available
+- keep normal reasoning low/medium
+- use deep reasoning only for hard tasks
+- do not spawn agents for trivial work
+- narrow tests first, broad validation once
+- keep optional plugins/tools scoped to projects that need them
+
+## Repository map
+
+```text
+AGENTS.md                         Adaptive global engineering rules
+.codex/config.toml               Balanced default config
+.codex/profiles/                 Economy / balanced / deep profiles
+.codex/agents/                   Specialist subagents
+plugins/pavan-codex-os/          Core plugin
+plugins/pavan-design-studio/     Design + Figma plugin
+plugins/pavan-backend-lab/       Deep backend plugin
+project-overlays/                Stack-specific rules
+templates/                       Starter blueprints
+docs/                            Operating and setup guides
+scripts/install-windows.ps1      Installer / updater
+scripts/doctor.ps1               Local environment check
+scripts/validate_repo.py         Deterministic repository validation
+.github/workflows/validate.yml   CI validation
+```
 
 ## Validate
 
@@ -66,19 +107,6 @@ or:
 python scripts/validate_repo.py
 ```
 
-## Recommended workflow
+## Operating principle
 
-1. Root `AGENTS.md` supplies durable engineering behavior.
-2. The smallest matching skill supplies the workflow.
-3. Specialized subagents handle independent architecture, review, QA, or visual inspection.
-4. Project overlays add stack-specific rules only where relevant.
-5. Templates accelerate project starts without replacing engineering judgment.
-6. Validation and visual inspection decide PASS/FAIL.
-
-## Safety
-
-No skill is allowed to claim success from code inspection alone when executable validation is available. Destructive actions, deployments, publishing, credential changes, and irreversible external mutations remain explicit user-controlled operations.
-
-## Status
-
-Version 1 is intentionally opinionated but modular. It is designed to evolve as Codex capabilities and the user's engineering workflow evolve.
+More prompt text is not more intelligence. Give Codex the smallest relevant instruction set, the right tools, an appropriate reasoning budget, and a verification loop.

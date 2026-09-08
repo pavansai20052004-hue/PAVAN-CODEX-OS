@@ -1,34 +1,37 @@
 # Skill Catalog
 
-## premium-ui-designer
-Major UI creation/redesign, dashboards, landing pages, portfolios, responsive polish, reference matching.
+## Core — pavan-codex-os
 
-## figma-to-react
-Translate Figma/reference designs into reusable React components with fidelity and responsive intent.
+- **premium-ui-designer** — production UI creation/redesign.
+- **figma-to-react** — focused Figma/reference-to-React implementation.
+- **fullstack-builder** — vertical full-stack feature development.
+- **api-builder** — API contracts, validation, auth boundaries, persistence.
+- **root-cause-debugger** — evidence-driven diagnosis and minimal fixes.
+- **test-engineer** — focused automated validation.
+- **security-review** — authorized application security review.
+- **hackathon-judge-ready** — reliable judge/demo flow and truthful readiness.
+- **deployment-readiness** — pre-deployment configuration/build review.
+- **production-qa** — final PASS/PARTIAL/FAIL verification.
+- **project-bootstrap** — production-minded project foundations.
 
-## fullstack-builder
-End-to-end feature work across UI, API, persistence, auth, and integration.
+## Design Studio — pavan-design-studio
 
-## api-builder
-Focused HTTP API contract and implementation work.
+- **design-director** — product art direction and design contracts.
+- **figma-roundtrip** — Figma ↔ code iteration using real connected tools.
+- **responsive-system** — resilient cross-viewport layout behavior.
+- **accessibility-design** — semantics, keyboard, focus, forms, contrast, motion.
+- **motion-design** — purposeful interaction motion and reduced-motion support.
+- **design-critique** — high-impact product/UI critique before redesign.
 
-## root-cause-debugger
-Evidence-driven bug diagnosis and regression fixes.
+## Backend Lab — pavan-backend-lab
 
-## test-engineer
-Focused automated tests and regression coverage.
+- **database-architect** — schemas, indexes, queries, migrations, integrity.
+- **performance-optimizer** — measured frontend/backend/runtime optimization.
+- **observability-readiness** — logs, metrics, traces, health and correlation.
+- **ai-agent-builder** — bounded tool-using agents with evals and cost-aware context.
+- **refactor-planner** — incremental behavior-preserving refactors.
+- **dependency-auditor** — dependency necessity, risk, cost, and upgrade health.
 
-## security-review
-Authorized code review for practical application security weaknesses.
+## Discovery rule
 
-## hackathon-judge-ready
-Demo reliability, judge flow, truthful readiness, recovery, and technical evidence.
-
-## deployment-readiness
-Pre-deployment build/runtime/configuration review without implicit publishing.
-
-## production-qa
-Final PASS/PARTIAL/FAIL verification before release, merge, demo, or handoff.
-
-## project-bootstrap
-New project setup from a brief with minimal production foundations.
+Keep skill descriptions short and trigger-specific. Detailed examples belong in references/assets. If the catalog grows large, create another optional plugin pack instead of inflating the core plugin.

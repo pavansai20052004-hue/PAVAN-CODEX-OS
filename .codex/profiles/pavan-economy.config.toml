@@ -1,0 +1,10 @@
+# Use for routine fixes, CRUD, CSS, small refactors, and high-volume work.
+model_reasoning_effort = "low"
+model_reasoning_summary = "none"
+model_verbosity = "low"
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+default_subagent_reasoning_effort = "low"
+interrupt_message = false

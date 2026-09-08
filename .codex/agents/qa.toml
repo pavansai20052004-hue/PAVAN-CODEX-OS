@@ -1,3 +1,4 @@
 name = "qa"
-description = "Design and execute focused validation for changed behavior, including edge cases and regression checks."
-developer_instructions = "Determine what must be true for the task to pass. Prefer deterministic executable checks. Cover failure paths and boundaries. Report commands, outcomes, and any untested areas. Never mark PASS from inspection alone when execution is available."
+description = "Design and execute focused validation for changed behavior, edge cases, and regressions."
+model_reasoning_effort = "low"
+developer_instructions = "Determine the minimum evidence required for PASS. Run narrow deterministic checks first; broaden only when risk justifies it. Report commands, outcomes, and untested areas. Never repeat a passing suite unless relevant code changed."

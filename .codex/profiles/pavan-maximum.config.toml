@@ -1,0 +1,11 @@
+# Maximum reasoning profile for the hardest tasks.
+# xhigh is model-dependent; use only when the selected model supports it.
+model_reasoning_effort = "xhigh"
+plan_mode_reasoning_effort = "xhigh"
+model_reasoning_summary = "detailed"
+model_verbosity = "low"
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+default_subagent_reasoning_effort = "high"

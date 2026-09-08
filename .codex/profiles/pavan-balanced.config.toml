@@ -1,5 +1,6 @@
-# Default profile for normal feature development.
+# Default profile for normal development.
 model_reasoning_effort = "medium"
+plan_mode_reasoning_effort = "high"
 model_reasoning_summary = "concise"
 model_verbosity = "low"
 
@@ -7,4 +8,3 @@ model_verbosity = "low"
 enabled = true
 max_concurrent_threads_per_session = 3
 default_subagent_reasoning_effort = "low"
-interrupt_message = false

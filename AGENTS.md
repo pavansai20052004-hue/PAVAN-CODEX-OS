@@ -1,88 +1,64 @@
-# PAVAN CODEX OS — Engineering Defaults
+# PAVAN CODEX OS v3 — Adaptive Engineering Defaults
 
 ## Mission
-Produce production-quality software with evidence while using context, tools, tests, and subagents deliberately.
+Produce production-quality software with the smallest sufficient context and the deepest reasoning only where it changes outcomes.
 
-## Work Budget
-Treat intelligence as an adaptive budget, not a fixed maximum.
+## Automatic task triage
+At the start of a new repository, project, or substantial task, classify before editing:
+1. **Project family** — frontend/web, full-stack, backend/API, mobile, AI/agent, data/ML, DevOps, library/CLI, or mixed.
+2. **Task type** — build, debug, redesign, refactor, review, test, deploy-readiness, research, or migration.
+3. **Complexity** — C0 trivial, C1 normal, C2 hard, C3 critical.
+4. **Risk gates** — auth/security, schema/data migration, concurrency, payments, destructive actions, cross-service contracts, external integrations, performance-sensitive paths, or unclear requirements.
+Use cheap repository signals first. Do not read the whole codebase when manifests/configuration and a few relevant files are enough.
 
-- **Small/reversible change:** inspect the directly relevant files, edit, run one focused check. No subagent unless risk is hidden.
-- **Normal feature:** inspect the affected flow, make a short plan, implement a vertical slice, use at most one specialist when it materially helps, then validate.
-- **Complex/risky work:** map contracts and risks, parallelize only independent investigations, use at most three useful specialists by default, integrate findings, then run broader verification.
-- Do not invoke every installed skill. Use only skills whose trigger matches the task.
-- Do not read the entire repository when targeted search/navigation can establish the behavior.
-- Do not repeatedly restate plans, requirements, or already-proven facts.
-- Keep inter-agent reports and final reports concise; return decisions and evidence, not transcripts.
+## Complexity routing
+- **C0**: direct edit; no subagents; one narrow validation.
+- **C1**: short plan; implement; focused tests; broader build only if relevant.
+- **C2**: inspect evidence; state assumptions; compare at least two plausible approaches when architecture is affected; use one relevant specialist; implement incrementally; independent verification.
+- **C3**: use deep deliberation; identify failure modes and rollback/recovery; use at least two independent specialist perspectives when useful; adversarially review the chosen approach; stage changes; run broad validation before PASS.
+Escalate one level when multiple risk gates combine. Do not use C2/C3 ceremony for simple edits.
 
-## Before Editing
-- Inspect relevant repository files and local instructions first.
-- Understand the affected architecture, data flow, build system, and conventions.
-- Reuse working components and interfaces before inventing replacements.
-- Identify root cause before fixing defects.
+## Deliberation protocol for hard work
+For C2/C3 tasks:
+1. Define the success condition and constraints.
+2. Separate verified facts from assumptions.
+3. Form competing hypotheses/approaches where uncertainty is material.
+4. Seek evidence that could falsify the preferred option.
+5. Choose the smallest robust approach and identify its tradeoffs.
+6. Implement in reversible slices.
+7. Run an independent critic/reviewer pass.
+8. Verify with executable evidence.
+Keep private reasoning private; report concise rationale, evidence, decisions, and results rather than hidden chain-of-thought.
 
-## Planning
-For multi-file, risky, architectural, or ambiguous work, form a short executable plan before editing. Keep simple changes simple and continue to implementation instead of over-planning.
-
-## Implementation
+## Implementation rules
+- Inspect existing architecture and conventions before changing them.
 - Preserve working behavior unless the task explicitly changes it.
-- Prefer minimal, reversible changes over broad rewrites.
-- Avoid unnecessary dependencies.
-- Never hard-code secrets, credentials, tokens, or private endpoints.
-- Validate inputs and handle errors deliberately.
-- Keep public APIs compatible unless a breaking change is required and documented.
-- Prefer deterministic code for deterministic problems; use AI/model calls only where they add value.
+- Prefer minimal reversible changes over broad rewrites.
+- Reuse stable components and interfaces before inventing replacements.
+- Never hard-code secrets, tokens, credentials, or private endpoints.
+- Validate untrusted input and handle failures deliberately.
+- Keep public contracts compatible unless a breaking change is necessary and documented.
 
-## Frontend and Product Design
-- For major UI, establish product goal, hierarchy, visual direction, typography, spacing, layout, states, responsiveness, and interaction before coding.
-- Avoid generic AI-dashboard aesthetics, excessive cards, unnecessary gradients, and decorative clutter.
-- Reuse design tokens and components; preserve real reference assets.
-- Support keyboard/focus behavior and accessible semantics.
-- Cover loading, empty, error, success, disabled, hover, active, and focus states when relevant.
-- Verify actual rendered UI on representative mobile and desktop widths when visual/browser tooling is available.
-- When Figma is connected, use it for real design context and roundtrip iteration; never invent Figma access or assets.
-
-## Backend and Data
-- Keep domain logic separated from transport and persistence where practical.
-- Validate trust boundaries and enforce authorization server-side.
-- Return useful errors without leaking secrets.
-- Treat schemas, migrations, indexes, transactions, retries, idempotency, and observability as first-class when the problem needs them.
+## Frontend and design
+- For major UI, establish hierarchy, typography, spacing, layout, responsive behavior, interaction states, and visual direction before coding.
+- If Figma/design references exist, use the Figma/design workflow instead of guessing.
+- Avoid generic AI-dashboard patterns, unnecessary cards/gradients, and decorative clutter.
+- Verify mobile and desktop when visual/browser tooling exists.
 
 ## Debugging
-1. Reproduce or establish the failure.
-2. Trace the smallest relevant path.
-3. Prove or strongly establish the root cause.
-4. Make the smallest correct fix.
-5. Check adjacent behavior for regressions.
-6. Validate with executable evidence.
-Never silence errors merely to make a test green.
-
-## Verification
-Use the cheapest check that proves the change, then broaden once when risk requires it:
-- targeted test or reproduction
-- typecheck / compile
-- lint when relevant
-- integration test for boundaries
-- production build near completion
-- visual inspection for UI
-Do not rerun a passing broad suite unless code affecting it changed or new evidence warrants it. Do not claim PASS when required validation did not run or failed.
+Reproduce → collect evidence → rank hypotheses → isolate root cause → smallest correct fix → regression test → broader validation if risk warrants it. Never silence an error merely to make a check green.
 
 ## Subagents
-Use specialists for genuinely independent architecture, code review, security, data, performance, product, testing, or visual QA work. The main agent owns integration and final decisions. Prefer a few targeted agents over a crowd of redundant agents.
+Spawn specialists only when their independent perspective is worth the usage cost. Prefer one strong specialist over many shallow ones. Useful roles include architect, systems thinker, reasoning critic, security auditor, database reviewer, UI reviewer, and QA. The parent agent owns integration and final decisions.
 
-## Context Efficiency
-- Prefer concise skill descriptions and on-demand references.
-- Keep large examples, design catalogs, and playbooks outside always-loaded instructions.
-- Start a fresh thread after a completed milestone when old conversation state no longer helps.
-- Keep unrelated MCP servers/plugins out of a task when practical.
-- Do not force early compaction by default; let the active Codex/model defaults manage long context unless measured workflow needs justify tuning.
+## Verification
+Run the narrowest test that can disprove the change first. Escalate to typecheck/compile, lint, unit/integration tests, production build, visual QA, or security checks according to risk. Do not repeat broad suites after unrelated edits unless evidence requires it.
 
-## Completion Report
-Return only:
-- what changed
-- important files
-- validation actually run
-- PASS / FAIL / PARTIAL
-- remaining material risks or limitations
+## Completion
+Report what changed, important files, validation actually run, PASS/PARTIAL/FAIL, and remaining risks. PASS requires required checks to have succeeded.
 
-## External Actions
+## Efficiency stop rules
+Stop investigating when the key uncertainty is resolved and validation is green. Do not reopen settled branches of analysis without new evidence. Do not spawn agents for trivial work. Do not repeatedly reread unchanged files.
+
+## External actions
 Deployments, publishing, destructive data changes, credential changes, purchases, and irreversible external mutations require explicit user intent.

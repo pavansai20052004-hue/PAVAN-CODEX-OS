@@ -40,11 +40,20 @@ Backup-IfExists $agentsDest "agents"
 New-Item -ItemType Directory -Force -Path $agentsDest | Out-Null
 Copy-Item -Force (Join-Path $repoRoot ".codex\agents\*.toml") $agentsDest
 
+$configSource = Join-Path $repoRoot ".codex\config.toml"
 $configDest = Join-Path $codexHome "config.toml"
 if (-not (Test-Path $configDest)) {
-    Copy-Item -Force (Join-Path $repoRoot ".codex\config.toml") $configDest
+    Copy-Item -Force $configSource $configDest
+    Write-Host "Installed PAVAN balanced config."
 } else {
-    Write-Host "Existing config.toml preserved. Merge desired balanced defaults manually if needed."
+    $existing = Get-Content -Raw -Path $configDest
+    if ($existing -match "PAVAN CODEX OS") {
+        Backup-IfExists $configDest "config.toml"
+        Copy-Item -Force $configSource $configDest
+        Write-Host "Upgraded existing PAVAN-managed config.toml to v3 defaults."
+    } else {
+        Write-Host "Custom config.toml preserved. Review .codex/config.toml and merge desired PAVAN v3 settings manually."
+    }
 }
 
 Get-ChildItem (Join-Path $repoRoot ".codex\profiles\*.config.toml") | ForEach-Object {
@@ -58,11 +67,13 @@ if ($InstallAllPlugins -or $InstallDesignStudio) { Install-PluginFolder "pavan-d
 if ($InstallAllPlugins -or $InstallBackendLab) { Install-PluginFolder "pavan-backend-lab" }
 
 Write-Host ""
-Write-Host "PAVAN CODEX OS installed."
+Write-Host "PAVAN CODEX OS v3 installed."
 Write-Host "Global instructions: $globalAgents"
 Write-Host "Agents: $agentsDest"
 Write-Host "Core plugin: pavan-codex-os"
-Write-Host "Profiles: pavan-economy, pavan-balanced, pavan-deep"
+Write-Host "Profiles: pavan-economy, pavan-balanced, pavan-deep, pavan-maximum"
+Write-Host "Balanced default: medium execution reasoning + high Plan-mode reasoning."
+Write-Host "Maximum profile: xhigh where supported by the selected model."
 if (-not $InstallDesignStudio -and -not $InstallAllPlugins) { Write-Host "Design Studio not installed (use -InstallDesignStudio or -InstallAllPlugins when wanted)." }
 if (-not $InstallBackendLab -and -not $InstallAllPlugins) { Write-Host "Backend Lab not installed (use -InstallBackendLab or -InstallAllPlugins when wanted)." }
 if (-not $SkipBackup) { Write-Host "Backups (when needed): $backupRoot" }
